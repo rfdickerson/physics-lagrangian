@@ -1,7 +1,8 @@
 
 var g = 9.8;
-var p = new pendulum(30, .5);
-var rp = new rimPendulum(.2, 20, 40);
+var p = new pendulum(130, .5);
+var rp = new rimPendulum(.02, 100, 100);
+var lastUpdate = 0.0;
 
 function pendulum(length, angle) {
     this.length = length;
@@ -10,8 +11,8 @@ function pendulum(length, angle) {
 }
 
 function rimPendulum(omega, radius, length) {
-    this.x = 150;
-    this.y = 50;
+    this.x = 250;
+    this.y = 150;
     this.omega = omega;
     this.rotation = 0.0;
     this.radius = radius;
@@ -22,7 +23,8 @@ function rimPendulum(omega, radius, length) {
 
 function createScene() {
 
-    draw();    
+    window.requestAnimationFrame(draw);
+    // draw();    
 }
 
 function update(dt) {
@@ -64,7 +66,9 @@ function drawRimPendulum(ctx) {
 
     var px = bx + rp.length*Math.sin(rp.angle);
     var py = by + rp.length*Math.cos(rp.angle);
-    
+
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'rgba(0,153,255,0.4)';
     ctx.beginPath();
     ctx.arc(rp.x, rp.y, rp.radius, 0, 2*Math.PI);
     ctx.closePath();
@@ -83,12 +87,24 @@ function drawRimPendulum(ctx) {
 // draw function
 function draw() {
 
-    update(0.05);
-    updateRim(0.05);
+    var time = new Date();
+
+    if (lastUpdate == 0) {
+	lastUpdate = time.getTime() - 5;
+    }
+    
+    var dt = time.getTime() - lastUpdate;
+    lastUpdate = time.getTime();
+
+    dt *= 0.01
+    
+    update(dt);
+    updateRim(dt);
     
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
+    ctx.globalCompositeOperation = 'destination-over';
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     
     ctx.fillStyle = "#FFFF00";
@@ -106,8 +122,9 @@ function draw() {
     ctx.lineTo(bx+offsetx,by+offsety);
     ctx.closePath();
     ctx.stroke();
-    
-    setTimeout(draw, 5);
+
+    window.requestAnimationFrame(draw);
+    // setTimeout(draw, 5);
     
 }
 
