@@ -1,6 +1,7 @@
 
 var g = 9.8;
 var p = new pendulum(30, .5);
+var rp = new rimPendulum(.2, 20, 40);
 
 function pendulum(length, angle) {
     this.length = length;
@@ -8,12 +9,20 @@ function pendulum(length, angle) {
     this.velocity = 0;
 }
 
+function rimPendulum(omega, radius, length) {
+    this.x = 150;
+    this.y = 50;
+    this.omega = omega;
+    this.rotation = 0.0;
+    this.radius = radius;
+    this.length = length;
+    this.angle = 0;
+    this.angleV = 0;
+}
+
 function createScene() {
 
-    console.log("Hello world");
-
-    draw();
-    
+    draw();    
 }
 
 function update(dt) {
@@ -28,17 +37,63 @@ function update(dt) {
     p.angle = p.angle + p.velocity * dt;
 }
 
+function updateRim(dt) {
+
+    var a = rp.radius;
+    var b = rp.length;
+    var theta = rp.angle
+    var omega = rp.omega;
+    var rotation = rp.rotation;
+    
+    var accel = a/b * omega*omega * Math.cos(theta - rotation)
+	- g/b * Math.sin(theta - rotation);
+
+    rp.rotation = rotation - dt * omega;
+        
+    rp.angleV = rp.angleV + dt * accel;
+    
+    rp.angle = rp.angle + dt * rp.angleV;
+    
+    
+}
+
+function drawRimPendulum(ctx) {
+
+    var bx = rp.x + rp.radius*Math.cos(rp.rotation);
+    var by = rp.y + rp.radius*Math.sin(rp.rotation);
+
+    var px = bx + rp.length*Math.sin(rp.angle);
+    var py = by + rp.length*Math.cos(rp.angle);
+    
+    ctx.beginPath();
+    ctx.arc(rp.x, rp.y, rp.radius, 0, 2*Math.PI);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.beginPath()
+    ctx.arc(bx, by, 5, 0, 2*Math.PI);
+    ctx.fill();
+
+    ctx.moveTo(bx, by);
+    ctx.lineTo(px, py);
+    ctx.stroke();
+    
+}
+
 // draw function
 function draw() {
 
-    update(.05);
+    update(0.05);
+    updateRim(0.05);
     
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     
-    ctx.fillStyle = "#FF0000";
+    ctx.fillStyle = "#FFFF00";
+
+    drawRimPendulum(ctx);
 
     var offsetx = p.length*Math.sin(p.angle);
     var offsety = p.length*Math.cos(p.angle);
