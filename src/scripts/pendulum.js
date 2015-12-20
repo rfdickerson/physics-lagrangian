@@ -1,60 +1,61 @@
 
+// Constants
 var g = 9.8;
 var p = new pendulum(130, .5);
-var rp = new rimPendulum(.02, 100, 100);
+var rp = new rimPendulum(0.2, 100.0, 100.0);
 var lastUpdate = 0.0;
 
 function pendulum(length, angle) {
-    this.length = length;
-    this.angle = angle;
-    this.velocity = 0;
+  this.length = length;
+  this.angle = angle;
+  this.velocity = 0;
 }
 
 function rimPendulum(omega, radius, length) {
-    this.x = 250;
-    this.y = 150;
-    this.omega = omega;
-    this.rotation = 0.0;
-    this.radius = radius;
-    this.length = length;
-    this.angle = 0;
-    this.angleV = 0;
+  this.x = 250;
+  this.y = 150;
+  this.omega = omega;
+  this.rotation = 0.0;
+  this.radius = radius;
+  this.length = length;
+  this.angle = 0.0;
+  this.angleV = 0.0;
 }
 
 function createScene() {
 
-    window.requestAnimationFrame(draw);
-    // draw();    
+  window.requestAnimationFrame(draw);
+
 }
 
 function update(dt) {
 
-    // compute acceleration
-    var accel = -g/p.length * Math.sin(p.angle);
+  // compute acceleration
+  var accel = -g/p.length * Math.sin(p.angle);
 
-    // integrate velocity
-    p.velocity = p.velocity + accel * dt;
+  // integrate velocity
+  p.velocity = p.velocity + accel * dt;
     
-    // integrate position
-    p.angle = p.angle + p.velocity * dt;
+  // integrate position
+  p.angle = p.angle + p.velocity * dt;
 }
 
 function updateRim(dt) {
 
-    var a = rp.radius;
-    var b = rp.length;
-    var theta = rp.angle
-    var omega = rp.omega;
-    var rotation = rp.rotation;
+  var a = rp.radius;
+  var b = rp.length;
+  var theta = rp.angle
+  var omega = rp.omega;
+  var rotation = rp.rotation;
     
-    var accel = a/b * omega*omega * Math.cos(theta - rotation)
-	- g/b * Math.sin(theta - rotation);
+  var accel = a/b * omega*omega * Math.cos(theta - rotation)
+      - g/b * Math.sin(theta - rotation);
 
-    rp.rotation = rotation - dt * omega;
+  rp.rotation = rotation - dt * omega;
         
-    rp.angleV = rp.angleV + dt * accel;
+  rp.angleV = rp.angleV + dt * accel;
     
-    rp.angle = rp.angle + dt * rp.angleV;
+  rp.angle = rp.angle + dt * rp.angleV;
     
     
 }
@@ -87,14 +88,14 @@ function drawRimPendulum(ctx) {
 // draw function
 function draw() {
 
-    var time = new Date();
+  var time = new Date();
 
-    if (lastUpdate == 0) {
-	lastUpdate = time.getTime() - 5;
-    }
+  if (lastUpdate == 0) {
+    lastUpdate = time.getTime() - 5;
+  }
     
-    var dt = time.getTime() - lastUpdate;
-    lastUpdate = time.getTime();
+  var dt = time.getTime() - lastUpdate;
+  lastUpdate = time.getTime();
 
     dt *= 0.01
     
@@ -114,7 +115,7 @@ function draw() {
     var offsetx = p.length*Math.sin(p.angle);
     var offsety = p.length*Math.cos(p.angle);
 
-    var bx = 50;
+    var bx = 100;
     var by = 10;
     
     ctx.beginPath();
