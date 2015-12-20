@@ -4,6 +4,12 @@ var g = 9.8;
 var p = new pendulum(130, .5);
 var rp = new rimPendulum(0.2, 100.0, 100.0);
 var lastUpdate = 0.0;
+var EPSILON = 0.01;
+
+var g = newtonRaphson(
+  function(x) { return x*x - 5*x + 4; },
+  2);
+console.log(g);
 
 function pendulum(length, angle) {
   this.length = length;
@@ -26,6 +32,26 @@ function createScene() {
 
   window.requestAnimationFrame(draw);
 
+}
+
+
+// Newton Raphson method of root finding.
+function newtonRaphson(f, guess) {
+
+  var fprime = derivative(guess, EPSILON, f);
+  var newguess = guess - f(guess) / fprime;
+  var diff = Math.abs(newguess - guess);
+
+  if (diff <= EPSILON) {
+    return newguess;
+  } else {
+    newtonRaphson(f, newguess);
+  }
+  
+}
+
+function derivative(x, h, f) {
+  return (f(x+h) - f(x)) / h;
 }
 
 function update(dt) {
