@@ -71,7 +71,8 @@ function updatePendulum(dt) {
     function(x) {
       return x - v - dt * accel;
     }, 0);
-  
+
+   
   // integrate position
   p.angle = p.angle + p.velocity * dt;
 }
@@ -133,7 +134,11 @@ function drawRimPendulum(ctx) {
 
     ctx.moveTo(bx, by);
     ctx.lineTo(px, py);
-    ctx.stroke();
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(px, py, 10, 0, 2*Math.PI);
+  ctx.stroke();
     
 }
 
