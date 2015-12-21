@@ -48,11 +48,11 @@ function newtonRaphson(f, guess) {
   } else {
     return newtonRaphson(f, newguess);
   }
-  
+
 }
 
 
-// Approximation of the derivative at x 
+// Approximation of the derivative at x
 function derivative(x, h, f) {
   return (f(x+h) - f(x)) / h;
 }
@@ -66,13 +66,13 @@ function updatePendulum(dt) {
   // p.velocity = p.velocity + accel * dt;
 
   var v = p.velocity;
-  
+
   p.velocity = newtonRaphson(
     function(x) {
       return x - v - dt * accel;
     }, 0);
 
-   
+
   // integrate position
   p.angle = p.angle + p.velocity * dt;
 }
@@ -84,7 +84,7 @@ function updateRim(dt) {
   var theta = rp.angle
   var omega = rp.omega;
   var rotation = rp.rotation;
-    
+
   var accel = a/b * omega*omega
       * Math.cos(theta - rotation)
       - g/b * Math.sin(theta);
@@ -108,10 +108,10 @@ function updateRim(dt) {
   //   function(x) {
   //     return x - v - dt * accel;
   //   }, 0);
-  
- 
-    
-    
+
+
+
+
 }
 
 function drawRimPendulum(ctx) {
@@ -122,7 +122,7 @@ function drawRimPendulum(ctx) {
     var px = bx + rp.length*Math.sin(rp.angle + Math.PI);
     var py = by + rp.length*Math.cos(rp.angle + Math.PI);
 
-   
+
     ctx.beginPath();
     ctx.arc(rp.x, rp.y, rp.radius, 0, 2*Math.PI);
     ctx.closePath();
@@ -136,10 +136,11 @@ function drawRimPendulum(ctx) {
     ctx.lineTo(px, py);
   ctx.stroke();
 
-  ctx.beginPath();
-  ctx.arc(px, py, 10, 0, 2*Math.PI);
-  ctx.stroke();
     
+    ctx.beginPath();
+    ctx.arc(px, py, 10, 0, 2*Math.PI);
+    ctx.stroke();
+
 }
 
 function drawPendulum(ctx) {
@@ -148,7 +149,7 @@ function drawPendulum(ctx) {
 
   var bx = 500;
   var by = 100;
-    
+
   ctx.beginPath();
   ctx.moveTo(bx,by);
   ctx.lineTo(bx+offsetx,by+offsety);
@@ -168,15 +169,15 @@ function draw() {
   if (lastUpdate == 0) {
     lastUpdate = time.getTime() - 5;
   }
-    
+
   var dt = time.getTime() - lastUpdate;
   lastUpdate = time.getTime();
 
   dt *= 0.1
-    
+
   updatePendulum(dt);
   updateRim(dt);
-  
+
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 
@@ -190,15 +191,20 @@ function draw() {
   drawRimPendulum(ctx);
 
   drawPendulum(ctx);
-  
+
   window.requestAnimationFrame(draw);
   // setTimeout(draw, 5);
-    
+
 }
 
 function onVelocityChanged(slider) {
 
   var vel = slider.value;
   rp.omega = vel;
-  
+
+}
+
+function onLengthChanged(slider) {
+  var l = slider.value;
+  rp.length = l;
 }
