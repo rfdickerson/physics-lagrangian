@@ -2,7 +2,7 @@
 // Constants
 var g = 9.8;
 var p = new pendulum(130, 2.14);
-var rp = new rimPendulum(0.0, 100.0, 200.0);
+var rp = new rimPendulum(0.02, 100.0, 200.0);
 var lastUpdate = 0.0;
 var EPSILON = 0.01;
 
@@ -136,7 +136,7 @@ function drawRimPendulum(ctx) {
     ctx.lineTo(px, py);
   ctx.stroke();
 
-    
+
     ctx.beginPath();
     ctx.arc(px, py, 10, 0, 2*Math.PI);
     ctx.stroke();
