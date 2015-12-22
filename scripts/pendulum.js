@@ -173,6 +173,10 @@ function draw() {
   var dt = time.getTime() - lastUpdate;
   lastUpdate = time.getTime();
 
+  if (dt > 50) {
+    dt = 5
+  } 
+
   dt *= 0.1
 
   updatePendulum(dt);
