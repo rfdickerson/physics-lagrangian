@@ -210,7 +210,7 @@ function draw() {
   updatePendulum(dt);
   updateRim(dt);
 
-  var canvas = document.getElementById("canvas");
+  var canvas = document.getElementById("canvas") as HTMLCanvasElement;
   var ctx: CanvasRenderingContext2D = canvas.getContext("2d");
 
   ctx.globalCompositeOperation = 'destination-over';
@@ -232,11 +232,11 @@ function draw() {
 function onVelocityChanged(slider: HTMLInputElement) {
 
   var vel = slider.value;
-  rp.omega = vel;
+  rp.omega = +vel;
 
 }
 
 function onLengthChanged(slider: HTMLInputElement) {
   var l = slider.value;
-  rp.length = l;
+  rp.length = +l;
 }
