@@ -14,7 +14,10 @@ export class Layout extends React.Component<undefined, undefined> {
 
     render() {
         return (
-            <ParametersPanel velocityChanged={(v) => v } lengthChanged={(v) => v} />
+            <div>
+                <Pendulum />
+                <ParametersPanel velocityChanged={(v) => v } lengthChanged={(v) => v} />
+            </div>
         )
     }
 

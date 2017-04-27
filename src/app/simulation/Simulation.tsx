@@ -1,4 +1,6 @@
 
+import { RimPendulum, createRimPendulum } from '../models/RimPendulum'
+
 // Constants
 var g = 9.8
 
@@ -28,16 +30,6 @@ interface Pendulum {
   velocity: number
 }
 
-interface RimPendulum {
-  x: number
-  y: number
-  omega: number 
-  rotation: number
-  radius: number
-  length: number
-  angle: number
-  angleV: number 
-}
 
 function createPendulum(length: number, angle: number): Pendulum {
   return {
@@ -47,18 +39,7 @@ function createPendulum(length: number, angle: number): Pendulum {
   }
 }
 
-function createRimPendulum(omega: number, radius: number, length: number) {
-  return {
-    x: 250,
-    y: 150,
-    omega: omega,
-    rotation: 0.0,
-    radius: radius,
-    length: length,
-    angle: 3.14,
-    angleV: 0.0
-  }
-}
+
 
 
 
