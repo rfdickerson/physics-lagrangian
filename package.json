@@ -1,0 +1,28 @@
+{
+  "name": "physics-lagrangian",
+  "version": "1.0.0",
+  "description": "This project is created to teach how to use Lagrangian mechanics to solve a series of physics systems such as pendulums, rotating wheels, etc.",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rfdickerson/physics-lagrangian.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rfdickerson/physics-lagrangian/issues"
+  },
+  "homepage": "https://github.com/rfdickerson/physics-lagrangian#readme",
+  "devDependencies": {
+    "@types/react": "^15.0.23",
+    "awesome-typescript-loader": "^3.1.2",
+    "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0"
+  }
+}

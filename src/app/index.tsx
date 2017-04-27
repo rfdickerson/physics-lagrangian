@@ -1,10 +1,14 @@
 
 // Constants
-var g = 9.8;
-var p = new pendulum(130, 2.14);
-var rp = new rimPendulum(0.02, 100.0, 200.0);
-var lastUpdate = 0.0;
-var EPSILON = 0.01;
+var g = 9.8
+
+var p = createPendulum(130, 2.14)
+
+var rp = createRimPendulum(0.02, 100.0, 200.0)
+
+var lastUpdate = 0.0
+
+var EPSILON = 0.01
 
 var g = newtonRaphson(
   function(x) { return x*x - 5*x - 4; },
@@ -12,21 +16,42 @@ var g = newtonRaphson(
 
 console.log(g);
 
-function pendulum(length, angle) {
-  this.length = length;
-  this.angle = angle;
-  this.velocity = 0;
+interface Pendulum {
+  length: number
+  angle: number
+  velocity: number
 }
 
-function rimPendulum(omega, radius, length) {
-  this.x = 250;
-  this.y = 150;
-  this.omega = omega;
-  this.rotation = 0.0;
-  this.radius = radius;
-  this.length = length;
-  this.angle = 3.14;
-  this.angleV = 0.0;
+interface RimPendulum {
+  x: number
+  y: number
+  omega: number 
+  rotation: number
+  radius: number
+  length: number
+  angle: number
+  angleV: number 
+}
+
+function createPendulum(length: number, angle: number): Pendulum {
+  return {
+    length: length,
+    angle: angle,
+    velocity: 0
+  }
+}
+
+function createRimPendulum(omega: number, radius: number, length: number) {
+  return {
+    x: 250,
+    y: 150,
+    omega: omega,
+    rotation: 0.0,
+    radius: radius,
+    length: length,
+    angle: 3.14,
+    angleV: 0.0
+  }
 }
 
 function createScene() {
@@ -37,7 +62,7 @@ function createScene() {
 
 
 // Newton Raphson method of root finding.
-function newtonRaphson(f, guess) {
+function newtonRaphson(f: MyFunction, guess: number): number {
 
   var fprime = derivative(guess, EPSILON, f);
   var newguess = guess - f(guess) / fprime;
@@ -52,12 +77,14 @@ function newtonRaphson(f, guess) {
 }
 
 
+type MyFunction = (x: number) => number 
+
 // Approximation of the derivative at x
-function derivative(x, h, f) {
+function derivative(x: number, h: number, f: MyFunction) {
   return (f(x+h) - f(x)) / h;
 }
 
-function updatePendulum(dt) {
+function updatePendulum(dt: number) {
 
   // compute acceleration
   var accel = -g/p.length * Math.sin(p.angle);
@@ -77,7 +104,7 @@ function updatePendulum(dt) {
   p.angle = p.angle + p.velocity * dt;
 }
 
-function updateRim(dt) {
+function updateRim(dt: number) {
 
   var a = rp.radius;
   var b = rp.length;
@@ -114,7 +141,7 @@ function updateRim(dt) {
 
 }
 
-function drawRimPendulum(ctx) {
+function drawRimPendulum(ctx: CanvasRenderingContext2D) {
 
     var bx = rp.x + rp.radius*Math.cos(rp.rotation);
     var by = rp.y + rp.radius*Math.sin(rp.rotation);
@@ -143,7 +170,8 @@ function drawRimPendulum(ctx) {
 
 }
 
-function drawPendulum(ctx) {
+function drawPendulum(ctx: CanvasRenderingContext2D) {
+
   var offsetx = p.length*Math.sin(p.angle + Math.PI);
   var offsety = p.length*Math.cos(p.angle + Math.PI);
 
@@ -183,7 +211,7 @@ function draw() {
   updateRim(dt);
 
   var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
+  var ctx: CanvasRenderingContext2D = canvas.getContext("2d");
 
   ctx.globalCompositeOperation = 'destination-over';
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -201,14 +229,14 @@ function draw() {
 
 }
 
-function onVelocityChanged(slider) {
+function onVelocityChanged(slider: HTMLInputElement) {
 
   var vel = slider.value;
   rp.omega = vel;
 
 }
 
-function onLengthChanged(slider) {
+function onLengthChanged(slider: HTMLInputElement) {
   var l = slider.value;
   rp.length = l;
 }
