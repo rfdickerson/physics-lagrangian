@@ -54,7 +54,7 @@ function createRimPendulum(omega: number, radius: number, length: number) {
   }
 }
 
-function createScene() {
+export function createScene() {
 
   window.requestAnimationFrame(draw);
 
