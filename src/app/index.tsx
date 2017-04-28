@@ -1,10 +1,10 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { Layout } from "./components/Layout";
+import { Simulation } from "./components/Simulation";
 
 ReactDOM.render(
-    <Layout />,
+    <Simulation />,
     document.getElementById("container")
 
 );

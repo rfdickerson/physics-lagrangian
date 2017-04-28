@@ -28,14 +28,12 @@ export class ParametersPanel extends React.Component<ParametersPanelProps, Param
 
   changeVelocity(e: React.ChangeEvent<HTMLInputElement>) {
     var value = e.currentTarget.value
-    console.log(value)
     this.setState({ "velocity": +value })
     this.props.velocityChanged(+value)
   }
 
   changeLength(e: React.ChangeEvent<HTMLInputElement>) {
     var value = e.currentTarget.value
-    console.log(value)
     this.setState({ "length": +value })
     this.props.lengthChanged(+value)
   }
@@ -67,9 +65,9 @@ export class ParametersPanel extends React.Component<ParametersPanelProps, Param
             width="500"
             min="10"
             max="200"
-            step="20"
+            step="1"
             value={this.state.length}
-            onChange={this.changeLength}
+            onChange={e => this.changeLength(e) }
           />
 
         </div>
