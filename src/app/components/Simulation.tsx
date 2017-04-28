@@ -37,8 +37,6 @@ export class Simulation extends React.Component<undefined, SimulationState> {
             "pendulum": {...this.state.pendulum, rotation: p.rotation}
         })
 
-        console.log(p)
-
         requestAnimationFrame(() => {this.simulate()})
         
     }

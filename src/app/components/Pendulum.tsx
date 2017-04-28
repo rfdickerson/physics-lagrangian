@@ -36,8 +36,6 @@ export class Pendulum extends React.Component<PendulumProps, undefined> {
       transform: trans
     }
 
-    console.log('rotation ' + a)
-
     return (
       <div style={divStyle} />
     )
