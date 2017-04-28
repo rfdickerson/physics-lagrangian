@@ -32,7 +32,7 @@ export class Simulation extends React.Component<undefined, SimulationState> {
 
     simulate() {
 
-        let p = updateRim(this.state.pendulum, 0.01)
+        let p = updateRim(this.state.pendulum, 0.1)
         this.setState({
             "pendulum": {...this.state.pendulum, rotation: p.rotation}
         })

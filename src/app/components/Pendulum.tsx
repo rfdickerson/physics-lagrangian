@@ -15,7 +15,7 @@ export class Pendulum extends React.Component<PendulumProps, undefined> {
 
     const p = this.props.pendulum
 
-    const a = 200*Math.PI*p.rotation
+    const a = Math.PI*p.rotation
 
     const bx = p.x + p.radius*Math.cos(p.rotation)
     const by = p.y + p.radius*Math.sin(p.rotation)
@@ -23,15 +23,17 @@ export class Pendulum extends React.Component<PendulumProps, undefined> {
     const px = bx + p.length*Math.sin(p.angle + Math.PI)
     const py = by + p.length*Math.cos(p.angle + Math.PI)
 
+    const trans = 'translate(' + px + 'px, ' + py + 'px)' + ' rotate('+a+'deg)'
+
     const divStyle = {
       position: 'absolute' as any,
       color: 'blue',
       backgroundColor: 'blue',
       width: 20,
       height: p.length + "px",
-      left: px + "px",
-      top: py + "px",
-      transform: "rotate(" + a + ")"
+      left: p.x,
+      top: p.y,
+      transform: trans
     }
 
     console.log('rotation ' + a)
