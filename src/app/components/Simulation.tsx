@@ -6,6 +6,7 @@ import { Pendulum } from "./Pendulum"
 import { ParametersPanel } from "./ParametersPanel"
 
 import {RimPendulum, createRimPendulum} from '../models/RimPendulum'
+import { updateRim } from '../physics'
 
 interface SimulationState {
     pendulum: RimPendulum
@@ -31,6 +32,13 @@ export class Simulation extends React.Component<undefined, SimulationState> {
 
     simulate() {
 
+        let p = updateRim(this.state.pendulum, 0.01)
+        this.setState({
+            "pendulum": {...this.state.pendulum, rotation: p.rotation}
+        })
+
+        console.log(p)
+
         requestAnimationFrame(() => {this.simulate()})
         
     }
@@ -41,11 +49,21 @@ export class Simulation extends React.Component<undefined, SimulationState> {
         })
     }
 
+    velocityChanged(v: number) {
+        this.setState({
+            "pendulum": {...this.state.pendulum, omega: v}
+        })
+    }
+
     render() {
         return (
             <div>
                 <Pendulum pendulum={this.state.pendulum} />
-                <ParametersPanel velocityChanged={(v) => v } lengthChanged={(v) => this.lengthChanged(v)} />
+                <ParametersPanel 
+                    velocityChanged={(v) => this.velocityChanged(v) } 
+                    lengthChanged={(v) => this.lengthChanged(v)} 
+                    />
+
             </div>
         )
     }
