@@ -26,8 +26,12 @@ export class Pendulum extends React.Component<PendulumProps, undefined> {
     return (
       <div>
       <svg width="800" height="600">
+        <circle cx={p.x} cy={p.y} r={p.radius} strokeWidth="3" fill="red" />
         <line x1={bx} y1={by} x2={px} y2={py}
               strokeWidth="8" stroke="blue" />
+        <circle cx={bx} cy={by} r="5" strokeWidth="2" />
+        <circle cx={px} cy={py} r="10" strokeWidth="2" />
+        
         </svg>
         </div>
     )

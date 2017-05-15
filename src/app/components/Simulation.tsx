@@ -47,7 +47,7 @@ export class Simulation extends React.Component<undefined, SimulationState> {
 
         let p = updateRim(this.state.pendulum, dt);
         this.setState({
-            "pendulum": {...this.state.pendulum, rotation: p.rotation},
+            "pendulum":  p,
             lastUpdate: time.getTime()
         })
 
@@ -58,13 +58,19 @@ export class Simulation extends React.Component<undefined, SimulationState> {
     lengthChanged(v: number) {
         this.setState({
             "pendulum": {...this.state.pendulum, length: v}
-        })
+        });
     }
 
     velocityChanged(v: number) {
         this.setState({
             "pendulum": {...this.state.pendulum, omega: v}
-        })
+        });
+    }
+
+    radiusChanged(v: number) {
+        this.setState({
+            "pendulum": {...this.state.pendulum, radius: v}
+        });
     }
 
     render() {
@@ -74,6 +80,7 @@ export class Simulation extends React.Component<undefined, SimulationState> {
                 <ParametersPanel 
                     velocityChanged={(v) => this.velocityChanged(v) } 
                     lengthChanged={(v) => this.lengthChanged(v)} 
+                    radiusChanged={(v) => this.radiusChanged(v)}
                     />
 
             </div>

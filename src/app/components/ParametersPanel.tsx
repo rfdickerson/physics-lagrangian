@@ -6,11 +6,13 @@ import { Panel } from 'react-bootstrap'
 export interface ParametersPanelProps {
   velocityChanged: (value: number) => void
   lengthChanged: (value: number) => void
+  radiusChanged: (value: number) => void
 }
 
 export interface ParametersPanelState {
   velocity: number
-  length: number
+  length: number,
+  radius: number
 }
 
 export class ParametersPanel extends React.Component<ParametersPanelProps, ParametersPanelState> {
@@ -21,7 +23,8 @@ export class ParametersPanel extends React.Component<ParametersPanelProps, Param
 
     this.state = {
       velocity: 0,
-      length: 50
+      length: 50,
+      radius: 10
     }
 
   }
@@ -36,6 +39,12 @@ export class ParametersPanel extends React.Component<ParametersPanelProps, Param
     var value = e.currentTarget.value
     this.setState({ "length": +value })
     this.props.lengthChanged(+value)
+  }
+
+  changeRadius(e: React.ChangeEvent<HTMLInputElement>) {
+    var value = e.currentTarget.value;
+    this.setState({ "radius": +value });
+    this.props.radiusChanged(+value);
   }
 
   render() {
@@ -68,6 +77,21 @@ export class ParametersPanel extends React.Component<ParametersPanelProps, Param
             step="1"
             value={this.state.length}
             onChange={e => this.changeLength(e) }
+          />
+          </div>
+
+          <div className="input-group">
+          <span className="input-group-addon">Rim Radius</span>
+          <input
+            className="form-control"
+            type="range"
+            id="rimvelocity"
+            width="500"
+            min="10"
+            max="200"
+            step="1"
+            value={this.state.radius}
+            onChange={e => this.changeRadius(e) }
           />
 
         </div>

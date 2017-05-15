@@ -36,18 +36,18 @@ function derivative(x: number, h: number, f: MyFunction) {
 
 export function updateRim(rp: RimPendulum, dt: number): RimPendulum {
 
-  var a = rp.radius;
-  var b = rp.length;
+  const a = rp.radius;
+  const b = rp.length;
   var theta = rp.angle
   var omega = rp.omega;
   var rotation = rp.rotation;
 
-  var accel = a/b * omega*omega
+  const accel = a/b * omega*omega
       * Math.cos(theta - rotation)
       - g/b * Math.sin(theta);
 
-  rp.rotation = rotation - dt * omega;
-
+  rotation = rotation - dt * omega;
+  
   var p1 = rp.angle + dt * rp.angleV + 0.5*accel*dt*dt;
   var v1 = rp.angleV + 0.5*accel*dt;
 
@@ -55,14 +55,14 @@ export function updateRim(rp: RimPendulum, dt: number): RimPendulum {
       * Math.cos(p1 - rotation)
       - g/b * Math.sin(p1)
 
-  rp.angleV = v1 + 0.5*accel2*dt;
+  const angleV = v1 + 0.5*accel2*dt;
 
-  rp.angle = p1;
+  
 
   return { ...rp, 
     "angle": p1,
-    "angleV": v1 + 0.5*accel2*dt,
-    "rotation": rotation - dt * omega,
+    "angleV": angleV,
+    "rotation": rotation,
   }
 
 }
