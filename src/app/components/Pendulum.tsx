@@ -23,21 +23,13 @@ export class Pendulum extends React.Component<PendulumProps, undefined> {
     const px = bx + p.length*Math.sin(p.angle + Math.PI)
     const py = by + p.length*Math.cos(p.angle + Math.PI)
 
-    const trans = 'translate(' + px + 'px, ' + py + 'px)' + ' rotate('+a+'deg)'
-
-    const divStyle = {
-      position: 'absolute' as any,
-      color: 'blue',
-      backgroundColor: 'blue',
-      width: 20,
-      height: p.length + "px",
-      left: p.x,
-      top: p.y,
-      transform: trans
-    }
-
     return (
-      <div style={divStyle} />
+      <div>
+      <svg width="800" height="600">
+        <line x1={bx} y1={by} x2={px} y2={py}
+              strokeWidth="8" stroke="blue" />
+        </svg>
+        </div>
     )
   }
 

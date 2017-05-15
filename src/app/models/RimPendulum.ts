@@ -19,7 +19,7 @@ export function createRimPendulum(omega: number, radius: number, length: number)
     rotation: 0.0,
     radius: radius,
     length: length,
-    angle: 3.14,
+    angle: Math.PI,
     angleV: 0.0
   }
 }

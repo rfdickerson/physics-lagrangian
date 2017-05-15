@@ -10,7 +10,8 @@ import { updateRim } from '../physics'
 
 interface SimulationState {
     pendulum: RimPendulum
-    running: boolean
+    running: boolean,
+    lastUpdate: number
 }
 
 // Simulation state component
@@ -21,7 +22,8 @@ export class Simulation extends React.Component<undefined, SimulationState> {
 
         this.state = {
             pendulum: createRimPendulum(0.02, 100.0, 200.0),
-            running: true
+            running: true,
+            lastUpdate: undefined
         }
 
     }
@@ -32,9 +34,21 @@ export class Simulation extends React.Component<undefined, SimulationState> {
 
     simulate() {
 
-        let p = updateRim(this.state.pendulum, 0.1)
+        var time = new Date();
+
+        if (this.state.lastUpdate === undefined) {
+            this.setState({
+                lastUpdate: time.getTime() - 0.001
+            })
+        }
+        var dt = time.getTime() - this.state.lastUpdate;
+
+        dt *= 0.01;
+
+        let p = updateRim(this.state.pendulum, dt);
         this.setState({
-            "pendulum": {...this.state.pendulum, rotation: p.rotation}
+            "pendulum": {...this.state.pendulum, rotation: p.rotation},
+            lastUpdate: time.getTime()
         })
 
         requestAnimationFrame(() => {this.simulate()})
