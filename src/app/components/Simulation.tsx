@@ -25,7 +25,6 @@ export class Simulation extends React.Component<undefined, SimulationState> {
             running: true,
             lastUpdate: undefined
         }
-
     }
 
     componentDidMount() {
