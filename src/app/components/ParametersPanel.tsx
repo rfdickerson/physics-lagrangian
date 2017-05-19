@@ -59,7 +59,7 @@ export class ParametersPanel extends React.Component<ParametersPanelProps, Param
             id="rimvelocity"
             width="500"
             min="0"
-            max="0.1"
+            max="0.5"
             step="0.001"
             value={this.state.velocity}
             onChange={e => this.changeVelocity(e)} />
